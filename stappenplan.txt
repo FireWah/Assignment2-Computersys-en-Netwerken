@@ -1,0 +1,8 @@
+Stappenplan assigment:
+Open 2 terminals waarbij chat A bvb port 1234, uitgaand en 1235 inkomend, om berichten af te luisteren.
+en chat B port 1235 uitgaand en 1234 inkomend, om berichten af te luisteren: implemntatie;
+met sock.bind
+
+maak een Input() die doorgegeven wordt van chat A naar chat B. 
+Stuur de sequencenummer + de bericht + Nickname aan chat B.
+De verzonden bericht wordt opgeslagen in een klasse bij Chat A en bij Chat B

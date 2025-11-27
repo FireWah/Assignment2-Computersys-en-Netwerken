@@ -1,0 +1,6 @@
+# op gaming laptop:
+cd c:\Studie\programmerenerenr\opdracht 2\Assignment2-Computersys-en-Netwerken
+chat 1: python3 assignment2-s4883101.py Hoi localhost 5678 5679
+chat 2: python3 assignment2-s4883101.py Hallo localhost 5679 5678
+
+# op school laptop:
