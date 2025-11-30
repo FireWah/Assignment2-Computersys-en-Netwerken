@@ -2,6 +2,7 @@ import socket
 import sys
 import random
 from dataclasses import dataclass
+import re
 
 
 
@@ -35,14 +36,18 @@ class ChatProgramma:
             Verzendbericht = input("Geef je bericht:\n")
             try:
                 seqnum += 1
-                SocketObject.sendto(f"{Nickname}: {Verzendbericht}\n [{seqnum}]".encode('utf-8'), (Hostname, port_uitgaand))
+                SocketObject.sendto(f"{Nickname}: ({Verzendbericht})\n Bericht met volgnr:[{seqnum}]".encode('utf-8'), (Hostname, port_uitgaand))
             except Exception:
-                SocketObject.sendto(f"{Nickname}: {Verzendbericht}\n [{seqnum}]".encode('utf-8'), (Hostname, port_inkomend))
+                SocketObject.sendto(f"{Nickname}: {Verzendbericht}\n Bericht met volgnr:[{seqnum}]".encode('utf-8'), (Hostname, port_inkomend))
             try:
                 Ontvangen_bericht, adr = SocketObject.recvfrom(1000) # --> dit geeft een tuple terug (b'bericht', (localhost, port))
                 print(Ontvangen_bericht.decode())
+                match = re.search(r'\((.*?)\)', Ontvangen_bericht.decode()) # helemaal ge chatgpt'ed, vind eigen manier !!
+                check = match.group(1)
+                if check == "quit":
+                    break
             except Exception:
-                print(f"{Verzendbericht} met seqnum {seqnum}") # ff voor debugging
+                print(f"{Verzendbericht} met seqnum {seqnum}, {Exception}") # ff voor debugging
                 continue
 
 

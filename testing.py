@@ -1,4 +1,7 @@
 a = "string"
 b = "jatoch"
-verzendbericht = a, b
-print(type(verzendbericht))
+import re
+string = "ha: (kapot, nee, ja, oke stop.)\n jatog"
+inhoud = re.search(r'\((.*?)\)', string)
+match = inhoud.group(1)
+print(match)
