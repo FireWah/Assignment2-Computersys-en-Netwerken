@@ -2,7 +2,7 @@ import socket
 import sys
 import random
 from dataclasses import dataclass
-import re
+
 
 
 
@@ -31,20 +31,23 @@ class ChatProgramma:
         seqnum = 0
         # ontvang en verzend berichten
         SocketObject.bind((Hostname, port_inkomend))
-        Verzendbericht = None
+        Verzendbericht = None 
         while Verzendbericht != "quit":
             Verzendbericht = input("Geef je bericht:\n")
             try:
                 seqnum += 1
-                SocketObject.sendto(f"{Nickname}: ({Verzendbericht})\n Bericht met volgnr:[{seqnum}]".encode('utf-8'), (Hostname, port_uitgaand))
+                SocketObject.sendto(f"{Nickname}: ({Verzendbericht})\nBericht met volgnr:[{seqnum}]".encode('utf-8'), (Hostname, port_uitgaand))
             except Exception:
-                SocketObject.sendto(f"{Nickname}: {Verzendbericht}\n Bericht met volgnr:[{seqnum}]".encode('utf-8'), (Hostname, port_inkomend))
+                SocketObject.sendto(f"{Nickname}: ({Verzendbericht})\nBericht met volgnr:[{seqnum}]".encode('utf-8'), (Hostname, port_inkomend))
             try:
                 Ontvangen_bericht, adr = SocketObject.recvfrom(1000) # --> dit geeft een tuple terug (b'bericht', (localhost, port))
-                print(Ontvangen_bericht.decode())
-                match = re.search(r'\((.*?)\)', Ontvangen_bericht.decode()) # helemaal ge chatgpt'ed, vind eigen manier !!
-                check = match.group(1)
-                if check == "quit":
+                decoded_bericht = Ontvangen_bericht.decode()
+                print(decoded_bericht)
+                #hierbij doet het een check of het ontvangen bericht "quit" is
+                char1 = decoded_bericht.find("(")
+                char2 = decoded_bericht.find(")")
+                Check_if_quit = decoded_bericht[char1+1:char2]
+                if Check_if_quit == "quit":
                     break
             except Exception:
                 print(f"{Verzendbericht} met seqnum {seqnum}, {Exception}") # ff voor debugging
